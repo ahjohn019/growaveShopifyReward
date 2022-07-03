@@ -10,9 +10,9 @@ gw = pd.read_csv("reward_points_june_2022_test.csv")
 sp = pd.read_csv("trans_export_one_test.csv")
 
 # get shopify init database
-API_ID = "7e1c00d8eb5ab5c54f6729f8b80a502e"
-API_PWD = "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"
-SHOP_NAME = "dermaskinshop.myshopify.com"
+API_ID = ""
+API_PWD = ""
+SHOP_NAME = ""
 
 try:
     discountCodeApi= []
