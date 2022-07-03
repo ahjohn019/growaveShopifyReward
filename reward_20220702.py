@@ -2,6 +2,7 @@ from curses import keyname
 import pandas as pd 
 import requests
 import re
+import api_keys
 
 # reading the growave csv file
 gw = pd.read_csv("reward_points_june_2022_test.csv")
@@ -10,9 +11,9 @@ gw = pd.read_csv("reward_points_june_2022_test.csv")
 sp = pd.read_csv("trans_export_one_test.csv")
 
 # get shopify init database
-API_ID = ""
-API_PWD = ""
-SHOP_NAME = ""
+API_ID = api_keys.API_ID
+API_PWD = api_keys.API_PWD
+SHOP_NAME = api_keys.SHOP_NAME
 
 try:
     discountCodeApi= []

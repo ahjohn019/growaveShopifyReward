@@ -1,0 +1,4 @@
+*.csv
+reward_nov_updated_2021.py
+api_keys.py
+/__pycache__
