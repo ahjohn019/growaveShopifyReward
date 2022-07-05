@@ -85,32 +85,24 @@ try:
         for index, name in sp['Name'].iteritems():
             splitName = name.split('#')[1]
             if splitName in orderAppend:
-                if(len(gw.loc[gw['Order Name']
-                              == splitName]['Action'].values)) >= 2:
-                    sp.loc[len(sp)] = [
-                        sp.loc[index, 'Order'],
-                        sp.loc[index, 'Name'],
-                        sp.loc[index, 'Kind'],
-                        sp.loc[index, 'Gateway'],
-                        sp.loc[index, 'Created At'],
-                        sp.loc[index, 'Status'],
-                        sp.loc[index, 'Amount'],
-                        sp.loc[index, 'Currency'],
-                        sp.loc[index, 'Card Type'],
-                        gw.loc[gw['Order Name']
-                               == splitName]['Action'].values[1],
-                        gw.loc[gw['Order Name']
-                               == splitName]['Earn'].values[1],
-                        gw.loc[gw['Order Name']
-                               == splitName]['Spend'].values[1]
-                    ]
+                extraAction = len(gw.loc[gw['Order Name']
+                                  == splitName]['Action'].values)
+                matchOrder = gw.loc[gw['Order Name']
+                                    == splitName]
+                for action in matchOrder['Action'].values:
+                    if(extraAction > 1):
+                        sp.loc[index, 'Extra Action'] = matchOrder['Action'].values[0]
+                    sp.loc[index, 'Action'] = action
 
-                sp.loc[index, 'Action'] = gw.loc[gw['Order Name']
-                                                 == splitName]['Action'].values[0]
-                sp.loc[index, 'Earn'] = gw.loc[gw['Order Name']
-                                               == splitName]['Earn'].values[0]
-                sp.loc[index, 'Spend'] = gw.loc[gw['Order Name']
-                                                == splitName]['Spend'].values[0]
+                for earn in matchOrder['Earn'].values:
+                    if(extraAction > 1):
+                        sp.loc[index, 'Spend'] = matchOrder['Spend'].values[1]
+                    sp.loc[index, 'Earn'] = earn
+
+                for spend in matchOrder['Spend'].values:
+                    if(extraAction > 1):
+                        sp.loc[index, 'Earn'] = matchOrder['Earn'].values[0]
+                    sp.loc[index, 'Spend'] = spend
 
     orderNumberPlaced()
     extractEarnPoints()
@@ -127,3 +119,13 @@ try:
 except Exception as e:
     print(e)
     pass
+
+# for list in matchOrder:
+#                    if(extraAction > 1):
+#                         if list == 'Earn':
+#                             sp.loc[index, 'Spend'] = matchOrder['Spend'].values[1]
+#                         if list == 'Spend':
+#                             sp.loc[index, 'Earn'] = matchOrder['Earn'].values[0]
+#                     else:
+#                         if list != 'Order Name' and list != 'Points' and list != 'Date' and list != 'Action' and list != 'Coupon':
+#                             sp.loc[index, list] = matchOrder[list].values[0]
